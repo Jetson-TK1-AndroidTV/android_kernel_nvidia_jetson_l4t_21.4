@@ -3184,14 +3184,7 @@ static int tegra_dc_probe(struct platform_device *ndev)
 			dcmode->v_active      = specs.modedb->yres;
 			dcmode->h_front_porch = specs.modedb->right_margin;
 			dcmode->v_front_porch = specs.modedb->lower_margin;
-
-			/* Program DC only with supported pclk. If pclk is not
-			 * supported, fall back to default mode.
-			 */
-			if (dcmode->pclk > PICOS2KHZ(tegra_dc_get_out_max_pixclock(dc)) * 1000)
-				tegra_dc_set_fb_mode(dc, &tegra_dc_vga_mode, 0);
-			else
-				tegra_dc_set_mode(dc, dcmode);
+			tegra_dc_set_mode(dc, dcmode);
 			dc->pdata->fb->xres = dcmode->h_active;
 			dc->pdata->fb->yres = dcmode->v_active;
 		}
