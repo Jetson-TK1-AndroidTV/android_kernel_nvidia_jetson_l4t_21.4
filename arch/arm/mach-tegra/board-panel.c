@@ -186,6 +186,8 @@ struct device_node *tegra_panel_get_dt_node(
 	struct board_info display_board;
 
 	tegra_get_display_board_info(&display_board);
+	if (display_board.board_id == 0)
+		tegra_get_board_info(&display_board);
 
 	if (pdata)
 		dc_out = pdata->default_out;
