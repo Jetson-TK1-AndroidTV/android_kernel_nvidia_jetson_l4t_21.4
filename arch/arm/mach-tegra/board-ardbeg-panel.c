@@ -601,6 +601,8 @@ static struct platform_device ardbeg_nvmap_device  = {
 		.platform_data = &ardbeg_nvmap_data,
 	},
 };
+
+#ifndef CONFIG_TEGRA_HDMI_PRIMARY
 static struct tegra_io_dpd dsic_io = {
 	.name			= "DSIC",
 	.io_dpd_reg_index	= 1,
@@ -688,7 +690,6 @@ static struct tegra_dp_out dp_settings = {
 	.tx_pu_disable = true,
 };
 
-#ifndef CONFIG_TEGRA_HDMI_PRIMARY
 /* can be called multiple times */
 static struct tegra_panel *ardbeg_panel_configure(struct board_info *board_out,
 	u8 *dsi_instance_out)
@@ -1003,9 +1004,11 @@ int __init ardbeg_display_init(void)
 {
 	struct clk *disp1_clk = clk_get_sys("tegradc.0", NULL);
 	struct clk *disp2_clk = clk_get_sys("tegradc.1", NULL);
+#ifndef CONFIG_TEGRA_HDMI_PRIMARY
 	struct tegra_panel *panel;
 	struct board_info board;
 	long disp1_rate = 0;
+#endif
 	long disp2_rate = 0;
 
 	/*
