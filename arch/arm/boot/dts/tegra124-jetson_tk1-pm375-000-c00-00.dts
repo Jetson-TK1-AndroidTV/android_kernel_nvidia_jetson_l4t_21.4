@@ -1,5 +1,7 @@
 /dts-v1/;
 
+#include <dt-bindings/display/tegra-dc.h>
+
 #include "tegra124.dtsi"
 #include "tegra124-platforms/tegra124-jetson_tk1-keys-pm375-0000-c00-00.dtsi"
 #include "tegra124-platforms/tegra124-jetson_tk1-gpio-pm375-0000-c00-00.dtsi"
@@ -17,6 +19,17 @@
 
 	chosen {
 		bootargs = "tegraid=40.0.0.00.00 vmalloc=256M video=tegrafb console=ttyS0,115200n8 earlyprintk";
+	};
+
+	host1x {
+		hdmi {
+			status = "okay";
+			nvidia,ddc-i2c-bus = <&hdmi_ddc>;
+			nvidia,hpd-gpio = <&gpio TEGRA_GPIO(N, 7) 1>; /* PN7 */
+		};
+	};
+	hdmi_ddc: i2c@7000c700 {
+		clock-frequency = <100000>;
 	};
 
 	pinmux {

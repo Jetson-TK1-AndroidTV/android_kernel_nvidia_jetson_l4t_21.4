@@ -96,7 +96,7 @@
 			};
 		};
 
-		vdd_hdmi: regulator@4 {
+		vdd_hdmi_5v0: regulator@4 {
 		  compatible = "regulator-fixed-sync";
 		  reg = <4>;
 		  regulator-name = "vdd-hdmi";
