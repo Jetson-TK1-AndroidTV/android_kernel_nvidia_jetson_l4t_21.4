@@ -211,6 +211,18 @@ struct device_node *tegra_panel_get_dt_node(
 				&dsi_s_wqxga_10_1_ops);
 		np_panel = of_find_compatible_node(NULL, NULL, "s,wqxga-10-1");
 		break;
+#ifndef CONFIG_TEGRA_HDMI_PRIMARY
+	case BOARD_PM375:
+		/*
+		 * HACK: choose random LCD config (p,wuxga-10-1) as primary LCD so
+		 * that fb0 registers correctly and hwcomposer doesn't explode
+		 */
+		if (pdata && dc_out)
+			tegra_panel_register_ops(dc_out,
+				&dsi_p_wuxga_10_1_ops);
+		np_panel = of_find_compatible_node(NULL, NULL, "p,wuxga-10-1");
+		break;
+#endif
 	default:
 		WARN(1, "Display panel not supported\n");
 	};
